@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="topic_name">topic name</string>
+    <string name="fab_content_desc">topic downlaod button</string>
+    <string name="topic_thumbnail">topic thumbnail</string>
+    <string name="download_button">download</string>
+    <string name="topic_dowload_status">topic dowload_ tatus</string>
+    <string name="topic_download_status">topic download status</string>
+</resources>
