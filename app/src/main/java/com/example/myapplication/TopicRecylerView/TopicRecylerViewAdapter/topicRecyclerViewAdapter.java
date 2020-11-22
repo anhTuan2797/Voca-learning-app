@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.myapplication.R;
+import com.example.myapplication.recyclerViewClickInterface;
 
 import java.util.ArrayList;
 
@@ -25,12 +26,14 @@ public class topicRecyclerViewAdapter extends RecyclerView.Adapter<topicRecycler
     private ArrayList<String> mTopicNames = new ArrayList<>();
     private ArrayList<String> mTopicThumbs = new ArrayList<>();
     private ArrayList<Boolean> mTopicDownloadStatus = new ArrayList<Boolean>();
+    private recyclerViewClickInterface mRecyclerViewClickInterface;
     private Context mContext;
 
-    public topicRecyclerViewAdapter(ArrayList<String> topicNames, ArrayList<String> topicThumbs, ArrayList<Boolean> topicDownloadStatus, Context context){
+    public topicRecyclerViewAdapter(ArrayList<String> topicNames, ArrayList<String> topicThumbs, ArrayList<Boolean> topicDownloadStatus,recyclerViewClickInterface recyclerViewClickInterface, Context context){
         mTopicNames = topicNames;
         mTopicThumbs = topicThumbs;
         mTopicDownloadStatus = topicDownloadStatus;
+        mRecyclerViewClickInterface = recyclerViewClickInterface;
         mContext = context;
     }
 
@@ -59,13 +62,13 @@ public class topicRecyclerViewAdapter extends RecyclerView.Adapter<topicRecycler
             holder.topic_download_status.setVisibility(View.INVISIBLE);
             Log.i(null,"false");
         }
-        holder.topic_card_view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i(null,"clicked");
-                Log.i(null,mTopicNames.get(position));
-            }
-        });
+//        holder.topic_card_view.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Log.i(null,"clicked");
+//                Log.i(null,mTopicNames.get(position));
+//            }
+//        });
     }
 
     @Override
@@ -85,6 +88,13 @@ public class topicRecyclerViewAdapter extends RecyclerView.Adapter<topicRecycler
             topic_name = itemView.findViewById(R.id.topic_name);
             topic_thumb = itemView.findViewById(R.id.topic_thumbnail);
             topic_download_status = itemView.findViewById(R.id.topic_download_status);
+           itemView.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View v) {
+                   mRecyclerViewClickInterface.onItemClick(getAdapterPosition());
+               }
+           });
         }
+
     }
 }

@@ -27,7 +27,7 @@ import java.util.ArrayList;
  * Use the {@link main_fragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class main_fragment extends Fragment implements View.OnClickListener{
+public class main_fragment extends Fragment implements View.OnClickListener, recyclerViewClickInterface{
     NavController navController;
     RecyclerView recyclerView;
     private ArrayList<String> mTopicName = new ArrayList<>();
@@ -52,7 +52,7 @@ public class main_fragment extends Fragment implements View.OnClickListener{
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_fragment, container, false);
         recyclerView = view.findViewById(R.id.topic_list_recycler_view);
-        topicRecyclerViewAdapter adapter = new topicRecyclerViewAdapter(mTopicName,mTopicThumb,mTopicDownloadStatus,getContext());
+        topicRecyclerViewAdapter adapter = new topicRecyclerViewAdapter(mTopicName,mTopicThumb,mTopicDownloadStatus,this,getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
         return view;
@@ -80,6 +80,11 @@ public class main_fragment extends Fragment implements View.OnClickListener{
         mTopicThumb.add("https://images.pexels.com/photos/5650027/pexels-photo-5650027.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
         mTopicDownloadStatus.add(false);
 
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        Log.i(null, mTopicName.get(position));
     }
 
 //    private void initTopicRecyclerView(){
