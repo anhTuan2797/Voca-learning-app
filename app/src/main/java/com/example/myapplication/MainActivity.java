@@ -1,12 +1,14 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ActionBar;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 
 import com.example.myapplication.TopicRecylerView.TopicRecylerViewAdapter.topicRecyclerViewAdapter;
@@ -26,7 +28,9 @@ public class MainActivity extends AppCompatActivity {
 //        initTopicRecyclerView();
     }
 
-//    private void initImage(){
+
+
+    //    private void initImage(){
 //        mTopicName.add("topic 1");
 //        mTopicThumb.add("https://images.pexels.com/photos/5650027/pexels-photo-5650027.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
 //        mTopicDownloadStatus.add(true);

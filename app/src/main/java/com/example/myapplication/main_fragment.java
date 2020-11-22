@@ -33,6 +33,7 @@ public class main_fragment extends Fragment implements View.OnClickListener, rec
     private ArrayList<String> mTopicName = new ArrayList<>();
     private ArrayList<String> mTopicThumb = new ArrayList<>();
     private ArrayList<Boolean> mTopicDownloadStatus = new ArrayList<>();
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -44,13 +45,14 @@ public class main_fragment extends Fragment implements View.OnClickListener, rec
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        initImage();
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_fragment, container, false);
+        initImage();
         recyclerView = view.findViewById(R.id.topic_list_recycler_view);
         topicRecyclerViewAdapter adapter = new topicRecyclerViewAdapter(mTopicName,mTopicThumb,mTopicDownloadStatus,this,getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -58,8 +60,14 @@ public class main_fragment extends Fragment implements View.OnClickListener, rec
         return view;
     }
 
+//    for list item
+    @Override
+    public void onItemClick(int position,View view) {
+        Log.i(null, mTopicName.get(position));
+        Navigation.findNavController(view).navigate(R.id.action_main_fragment_to_topic_fragment2);
+    }
 
-
+//    For floating button
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.add_card_button){
@@ -68,6 +76,10 @@ public class main_fragment extends Fragment implements View.OnClickListener, rec
     }
 
     private void initImage(){
+        mTopicName.clear();
+        mTopicThumb.clear();
+        mTopicDownloadStatus.clear();
+
         mTopicName.add("topic 2");
         mTopicThumb.add("https://images.pexels.com/photos/5650027/pexels-photo-5650027.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
         mTopicDownloadStatus.add(true);
@@ -82,10 +94,7 @@ public class main_fragment extends Fragment implements View.OnClickListener, rec
 
     }
 
-    @Override
-    public void onItemClick(int position) {
-        Log.i(null, mTopicName.get(position));
-    }
+
 
 //    private void initTopicRecyclerView(){
 //        RecyclerView topicRecyclerView  = findViewById(R.id.topic_list_recycler_view);

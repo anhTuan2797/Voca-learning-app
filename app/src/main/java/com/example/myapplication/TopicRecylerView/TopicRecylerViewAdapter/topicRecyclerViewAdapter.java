@@ -91,7 +91,7 @@ public class topicRecyclerViewAdapter extends RecyclerView.Adapter<topicRecycler
            itemView.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View v) {
-                   mRecyclerViewClickInterface.onItemClick(getAdapterPosition());
+                   mRecyclerViewClickInterface.onItemClick(getAdapterPosition(),v);
                }
            });
         }

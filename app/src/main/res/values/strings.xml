@@ -9,4 +9,11 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_card_button">add card button</string>
+    <string name="topic_list">TOPIC LIST</string>
+    <string name="topic_header">TOPIC LIST</string>
+    <string name="word">word</string>
+    <string name="word_meaning">word meaning</string>
+    <string name="word_pronoun">word pronoun</string>
+    <string name="word_content">Word content</string>
+    <string name="word_image">Word_ mage</string>
 </resources>
