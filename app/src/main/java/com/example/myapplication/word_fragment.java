@@ -35,7 +35,7 @@ public class word_fragment extends Fragment {
 
     public void getData(){
         data.add("word 1");
-        data.add("word 2");
         data.add("https://images.pexels.com/photos/5650027/pexels-photo-5650027.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+        data.add("word 2");
     }
 }
