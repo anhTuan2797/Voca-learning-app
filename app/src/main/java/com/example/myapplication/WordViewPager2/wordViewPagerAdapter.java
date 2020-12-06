@@ -34,6 +34,12 @@ public class wordViewPagerAdapter extends RecyclerView.Adapter<wordViewPagerAdap
             mContext = context;
             mData = data;
             mViewPager2 = viewPager2;
+            mViewPager2.setPageTransformer(new ViewPager2.PageTransformer() {
+                @Override
+                public void transformPage(@NonNull View page, float position) {
+
+                }
+            });
     }
 
     @NonNull
@@ -72,50 +78,107 @@ public class wordViewPagerAdapter extends RecyclerView.Adapter<wordViewPagerAdap
 //                    }
 //                });
 //            }
-        if(position % 4 == 0){
-            String text = mData.get(position);
-            holder.wordContent.setText(text);
-            holder.speakButton.setVisibility(View.VISIBLE);
-            textToSpeech = new TextToSpeech(mContext, new TextToSpeech.OnInitListener() {
-                @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-                @Override
-                public void onInit(int status) {
-                    if(status == TextToSpeech.ERROR){
-                        Log.e("TTS", "onInit: engine install fail" );
-                    }
-                    else {
-                        Log.e("TTS", "onInit: engine install success");
-                        textToSpeech.setLanguage(Locale.US);
-                        textToSpeech.setSpeechRate((float) 0.5);
-                        textToSpeech.speak(text,TextToSpeech.QUEUE_FLUSH,null,null);
-                    }
+//        if(position % 3 == 0){
+//            Log.i("", String.valueOf(position));
+//            String text = mData.get(position);
+//            holder.wordContent.setText(text);
+//            holder.speakButton.setVisibility(View.VISIBLE);
+//            textToSpeech = new TextToSpeech(mContext, new TextToSpeech.OnInitListener() {
+//                @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+//                @Override
+//                public void onInit(int status) {
+//                    if(status == TextToSpeech.ERROR){
+//                        Log.e("TTS", "onInit: engine install fail" );
+//                    }
+//                    else {
+//                        Log.e("TTS", "onInit: engine install success");
+//                        textToSpeech.setLanguage(Locale.US);
+//                        textToSpeech.setSpeechRate((float) 0.5);
+//                        textToSpeech.speak(text,TextToSpeech.QUEUE_FLUSH,null,null);
+//                    }
+//                }
+//            });
+//            holder.speakButton.setOnClickListener(new View.OnClickListener() {
+//                @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+//                @Override
+//                public void onClick(View v) {
+//                        textToSpeech.speak(text,TextToSpeech.QUEUE_FLUSH,null,null);
+//                }
+//            });
+//        }
+//        else if((position-1)%3 == 0){
+//            Log.i("", String.valueOf(position));
+//            holder.wordContent.setText("");
+//            holder.wordImage.setVisibility(View.VISIBLE);
+//            Glide.with(mContext)
+//                    .asBitmap()
+//                    .load(mData.get(position))
+//                    .into(holder.wordImage);
+//        }
+//        else {
+//            Log.i("", String.valueOf(position));
+//            holder.wordContent.setText(mData.get(position));
+//        }
+        mViewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+            @Override
+            public void onPageSelected(int position) {
+                if(position %3 == 0){
+                    Log.i("", String.valueOf(position));
+                    String text = mData.get(position);
+                    holder.wordImage.setVisibility(View.INVISIBLE);
+                    holder.wordContent.setText(text);
+                    holder.speakButton.setVisibility(View.VISIBLE);
+                    textToSpeech = new TextToSpeech(mContext, new TextToSpeech.OnInitListener() {
+                        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+                        @Override
+                        public void onInit(int status) {
+                            if(status == TextToSpeech.ERROR){
+                                Log.e("TTS", "onInit: engine install fail" );
+                            }
+                            else {
+                                Log.e("TTS", "onInit: engine install success");
+                                textToSpeech.setLanguage(Locale.US);
+                                textToSpeech.setSpeechRate((float) 0.5);
+                                textToSpeech.speak(text,TextToSpeech.QUEUE_FLUSH,null,null);
+                            }
+                        }
+                    });
+                            holder.speakButton.setOnClickListener(new View.OnClickListener() {
+                                @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+                                @Override
+                                public void onClick(View v) {
+                                        textToSpeech.speak(text,TextToSpeech.QUEUE_FLUSH,null,null);
+                                }
+                            });
                 }
-            });
-            holder.speakButton.setOnClickListener(new View.OnClickListener() {
-                @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-                @Override
-                public void onClick(View v) {
-                        textToSpeech.speak(text,TextToSpeech.QUEUE_FLUSH,null,null);
+                else if((position-1)%3 == 0){
+                    Log.i("", String.valueOf(position));
+                    holder.wordContent.setText("");
+                    holder.wordImage.setVisibility(View.VISIBLE);
+                    holder.speakButton.setVisibility(View.INVISIBLE);
+                    Glide.with(mContext)
+                            .asBitmap()
+                            .load(mData.get(position))
+                            .into(holder.wordImage);
                 }
-            });
-        }
-        else if((position-1)%4 == 0){
-            holder.wordContent.setText("");
-            holder.wordImage.setVisibility(View.VISIBLE);
-            Glide.with(mContext)
-                    .asBitmap()
-                    .load(mData.get(position))
-                    .into(holder.wordImage);
-        }
-        else {
-            holder.wordContent.setText(mData.get(position));
-        }
+                else if((position-2)%3 == 0) {
+                    Log.i("", String.valueOf(position));
+                    holder.wordImage.setVisibility(View.INVISIBLE);
+                    holder.speakButton.setVisibility(View.INVISIBLE);
+                    holder.wordContent.setText(mData.get(position));
+                }
+                super.onPageSelected(position);
+            }
+        });
     }
+
+
 
     @Override
     public int getItemCount() {
         return mData.size();
     }
+
 
 
     public class ViewHolder extends RecyclerView.ViewHolder{

@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavAction;
 import androidx.navigation.NavController;
@@ -17,6 +18,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -33,9 +35,9 @@ public class topic_fragment extends Fragment implements recyclerViewClickInterfa
     Toolbar toolbar;
     NavController navController;
     RecyclerView recyclerView;
-    private ArrayList<String> mWords = new ArrayList<>();
-    private ArrayList<String> mWordsMeaning = new ArrayList<>();
-    private ArrayList<String> mWordsPronoun = new ArrayList<>();
+    private static ArrayList<String> mWords = new ArrayList<>();
+    private static ArrayList<String> mWordsMeaning = new ArrayList<>();
+    private static ArrayList<String> mWordsPronoun = new ArrayList<>();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,8 +69,35 @@ public class topic_fragment extends Fragment implements recyclerViewClickInterfa
     }
 
     @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.play_button:
+                Log.i("", "onOptionsItemSelected: play button click");
+                Bundle result = new Bundle();
+                ArrayList<String> data = new ArrayList<>();
+                for(int i=0;i<mWords.size();i++){
+                    data.add(mWords.get(i));
+                    data.add("https://images.pexels.com/photos/5650027/pexels-photo-5650027.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+                    data.add(mWordsMeaning.get(i));
+                }
+                result.putStringArrayList("data",data);
+                getParentFragmentManager().setFragmentResult("data",result);
+                Navigation.findNavController(this.getView()).navigate(R.id.action_topic_fragment2_to_word_fragment);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void onItemClick(int position, View view) {
         Log.i(null, "word clicked");
+        Bundle result = new Bundle();
+        ArrayList<String> data = new ArrayList<>();
+        data.add(mWords.get(position));
+        data.add("https://images.pexels.com/photos/5650027/pexels-photo-5650027.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+        data.add(mWordsMeaning.get(position));
+        result.putStringArrayList("data",data);
+        getParentFragmentManager().setFragmentResult("data",result);
         Navigation.findNavController(view).navigate(R.id.action_topic_fragment2_to_word_fragment);
     }
     private void initWord(){
