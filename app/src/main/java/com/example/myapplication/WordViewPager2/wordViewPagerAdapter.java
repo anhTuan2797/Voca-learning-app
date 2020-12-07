@@ -34,12 +34,32 @@ public class wordViewPagerAdapter extends RecyclerView.Adapter<wordViewPagerAdap
             mContext = context;
             mData = data;
             mViewPager2 = viewPager2;
-            mViewPager2.setPageTransformer(new ViewPager2.PageTransformer() {
-                @Override
-                public void transformPage(@NonNull View page, float position) {
-
-                }
-            });
+//            mViewPager2.setPageTransformer(new ViewPager2.PageTransformer() {
+//                @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+//                @Override
+//                public void transformPage(@NonNull View page, float position) {
+//                    int pageWidth = page.getWidth();
+//
+//                    if(position < -1) {
+//                        page.setAlpha(0f);
+//                    } else if(position <= 0){
+//                        page.setAlpha(1f);
+//                        page.setTranslationX(0f);
+//                        page.setTranslationZ(0f);
+//                        page.setScaleX(1f);
+//                        page.setScaleY(1f);
+//                    } else if(position <= 1){
+//                        page.setAlpha(1 - position);
+//                        page.setTranslationX(pageWidth*-position);
+//                        page.setTranslationZ(-1f);
+//                        float scaleFactor = 0.75f + (1 - 0.75f)*(1- Math.abs(position));
+//                        page.setScaleX(scaleFactor);
+//                        page.setScaleY(scaleFactor);
+//                    }else {
+//                        page.setAlpha(0f);
+//                    }
+//                }
+//            });
     }
 
     @NonNull
