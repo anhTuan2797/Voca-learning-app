@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentResultListener;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,7 @@ public class word_fragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_word_fragment, container, false);
         viewPager2 = view.findViewById(R.id.word_viewPager2);
         getData();
+//        Log.i("", "onCreateView: "+data.get(0));
         wordViewPagerAdapter adapter = new wordViewPagerAdapter(getContext(),data,viewPager2);
         viewPager2.setAdapter(adapter);
         return view;
@@ -44,10 +46,10 @@ public class word_fragment extends Fragment {
     }
 
     public void getData(){
-        getParentFragmentManager().setFragmentResultListener("data", this, new FragmentResultListener() {
+        getParentFragmentManager().setFragmentResultListener("wordData", this, new FragmentResultListener() {
             @Override
             public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                data.addAll(result.getStringArrayList("data"));
+                data.addAll(result.getStringArrayList("wordData"));
             }
         });
     }

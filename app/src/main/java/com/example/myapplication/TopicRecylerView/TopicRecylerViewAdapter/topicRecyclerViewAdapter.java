@@ -76,6 +76,13 @@ public class topicRecyclerViewAdapter extends RecyclerView.Adapter<topicRecycler
         return mTopicNames.size();
     }
 
+    public void setData(ArrayList<String> TopicNames, ArrayList<String> TopicThumbs,ArrayList<Boolean> TopicDownloadStatus){
+        this.mTopicNames = TopicNames;
+        this.mTopicThumbs = TopicThumbs;
+        this.mTopicDownloadStatus = TopicDownloadStatus;
+        notifyDataSetChanged();
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView topic_name;
         ImageView topic_thumb;

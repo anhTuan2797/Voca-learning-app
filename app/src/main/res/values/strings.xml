@@ -16,4 +16,8 @@
     <string name="word_pronoun">word pronoun</string>
     <string name="word_content">Word content</string>
     <string name="word_image">Word_ mage</string>
+    <string name="add">ADD</string>
+    <string name="topicname">TopicName</string>
+    <string name="word_hint">hint</string>
+    <string name="word_mean">word mean</string>
 </resources>

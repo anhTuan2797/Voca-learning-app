@@ -1,0 +1,102 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "8971caf7fa04dfb54271386233cee500",
+    "entities": [
+      {
+        "tableName": "topic_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`topicId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `topic_name` TEXT, `topic_img_link` TEXT, `topic_type` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "topicId",
+            "columnName": "topicId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "topicName",
+            "columnName": "topic_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "topicImgLink",
+            "columnName": "topic_img_link",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "topicType",
+            "columnName": "topic_type",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "topicId"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "word_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`wordId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `word` TEXT, `word_mean` TEXT, `word_hint` TEXT, `priority` INTEGER NOT NULL, `topicId` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "wordId",
+            "columnName": "wordId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "word",
+            "columnName": "word",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "word_mean",
+            "columnName": "word_mean",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "word_hint",
+            "columnName": "word_hint",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "priority",
+            "columnName": "priority",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "topicId",
+            "columnName": "topicId",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "wordId"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8971caf7fa04dfb54271386233cee500')"
+    ]
+  }
+}

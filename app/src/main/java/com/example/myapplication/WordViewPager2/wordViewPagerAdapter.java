@@ -172,14 +172,22 @@ public class wordViewPagerAdapter extends RecyclerView.Adapter<wordViewPagerAdap
                             });
                 }
                 else if((position-1)%3 == 0){
-                    Log.i("", String.valueOf(position));
-                    holder.wordContent.setText("");
-                    holder.wordImage.setVisibility(View.VISIBLE);
-                    holder.speakButton.setVisibility(View.INVISIBLE);
-                    Glide.with(mContext)
-                            .asBitmap()
-                            .load(mData.get(position))
-                            .into(holder.wordImage);
+                    if(URLUtil.isValidUrl(mData.get(position))) {
+                        Log.i("", String.valueOf(position));
+                        holder.wordContent.setText("");
+                        holder.wordImage.setVisibility(View.VISIBLE);
+                        holder.speakButton.setVisibility(View.INVISIBLE);
+                        Glide.with(mContext)
+                                .asBitmap()
+                                .load(mData.get(position))
+                                .into(holder.wordImage);
+                    }
+                    else {
+                        Log.i("", String.valueOf(position));
+                        holder.wordImage.setVisibility(View.INVISIBLE);
+                        holder.speakButton.setVisibility(View.INVISIBLE);
+                        holder.wordContent.setText(mData.get(position));
+                    }
                 }
                 else if((position-2)%3 == 0) {
                     Log.i("", String.valueOf(position));

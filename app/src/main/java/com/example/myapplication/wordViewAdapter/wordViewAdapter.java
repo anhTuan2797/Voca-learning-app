@@ -32,6 +32,13 @@ public class wordViewAdapter extends RecyclerView.Adapter<wordViewAdapter.Viewho
         Log.i(null, "wordViewAdapter: run");
     }
 
+    public void setData(ArrayList<String> words, ArrayList<String> wordsMeaning, ArrayList<String> wordsPronoun){
+        mWords = words;
+        mWordsMeaning = wordsMeaning;
+        mWordPronoun = wordsPronoun;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public Viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
