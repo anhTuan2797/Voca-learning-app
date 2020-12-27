@@ -51,4 +51,6 @@ public class TopicViewModel extends AndroidViewModel {
         topicRepository.insertAllWord(words);
     }
 
+    public void deleteWords(word...words){topicRepository.deleteWords(words);}
+
 }

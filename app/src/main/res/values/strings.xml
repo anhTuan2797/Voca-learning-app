@@ -11,7 +11,7 @@
     <string name="add_card_button">add card button</string>
     <string name="topic_list">TOPIC LIST</string>
     <string name="topic_header">TOPIC LIST</string>
-    <string name="word">word</string>
+    <string name="word"> new word</string>
     <string name="word_meaning">word meaning</string>
     <string name="word_pronoun">word pronoun</string>
     <string name="word_content">Word content</string>
@@ -20,4 +20,7 @@
     <string name="topicname">TopicName</string>
     <string name="word_hint">hint</string>
     <string name="word_mean">word mean</string>
+    <string name="yes">YES</string>
+    <string name="no">NO</string>
+    <string name="change">CHANGE</string>
 </resources>

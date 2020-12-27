@@ -24,5 +24,5 @@ public interface wordDao {
     void update(word word);
 
     @Delete
-    void delete(word word);
+    void delete(word...words);
 }

@@ -25,6 +25,10 @@
         <action
             android:id="@+id/action_topic_fragment2_to_word_fragment"
             app:destination="@id/word_fragment" />
+        <action
+            android:id="@+id/action_topic_fragment2_to_main_fragment"
+            app:destination="@id/main_fragment"
+            />
     </fragment>
 
     <fragment

@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="@string/topic_name" />
+        android:hint="@string/topic_name" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/word_input_card"
@@ -38,7 +38,7 @@
                 android:layout_height="65dp"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="@string/word"
+                android:hint="@string/word"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -66,7 +66,7 @@
                 android:autofillHints=""
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="@string/word_mean"
+                android:hint="@string/word_mean"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -94,7 +94,7 @@
                 android:layout_width="300dp"
                 android:layout_height="93dp"
                 android:ems="10"
-                android:text="@string/word_hint"
+                android:hint="@string/word_hint"
                 android:gravity="start|top"
                 android:inputType="textMultiLine"
                 app:layout_constraintBottom_toBottomOf="parent"

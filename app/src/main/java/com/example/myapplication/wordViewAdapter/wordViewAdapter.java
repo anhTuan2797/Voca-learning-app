@@ -19,23 +19,20 @@ import java.util.ArrayList;
 public class wordViewAdapter extends RecyclerView.Adapter<wordViewAdapter.Viewholder>{
     private ArrayList<String> mWords = new ArrayList<>();
     private ArrayList<String> mWordsMeaning = new ArrayList<>();
-    private ArrayList<String> mWordPronoun = new ArrayList<>();
     private recyclerViewClickInterface mRecyclerViewClickInterface;
     private Context mcontext;
 
-    public wordViewAdapter(ArrayList<String> words, ArrayList<String> wordsMeaning, ArrayList<String> wordsPronoun,recyclerViewClickInterface recyclerViewClickInterface, Context context ){
+    public wordViewAdapter(ArrayList<String> words, ArrayList<String> wordsMeaning,recyclerViewClickInterface recyclerViewClickInterface, Context context ){
         mWords = words;
         mWordsMeaning = wordsMeaning;
-        mWordPronoun = wordsPronoun;
         mRecyclerViewClickInterface = recyclerViewClickInterface;
         mcontext = context;
         Log.i(null, "wordViewAdapter: run");
     }
 
-    public void setData(ArrayList<String> words, ArrayList<String> wordsMeaning, ArrayList<String> wordsPronoun){
+    public void setData(ArrayList<String> words, ArrayList<String> wordsMeaning){
         mWords = words;
         mWordsMeaning = wordsMeaning;
-        mWordPronoun = wordsPronoun;
         notifyDataSetChanged();
     }
 
@@ -51,7 +48,6 @@ public class wordViewAdapter extends RecyclerView.Adapter<wordViewAdapter.Viewho
     public void onBindViewHolder(@NonNull Viewholder holder, int position) {
         holder.word.setText(mWords.get(position));
         holder.word_meaning.setText(mWordsMeaning.get(position));
-        holder.word_pronoun.setText(mWordPronoun.get(position));
         Log.i(null, "onBindViewHolder: run");
     }
 
@@ -63,13 +59,11 @@ public class wordViewAdapter extends RecyclerView.Adapter<wordViewAdapter.Viewho
     public class Viewholder extends RecyclerView.ViewHolder{
         TextView word;
         TextView word_meaning;
-        TextView word_pronoun;
         public Viewholder(@NonNull View itemView){
             super(itemView);
             Log.i(null, "view create");
             word = itemView.findViewById(R.id.word);
             word_meaning = itemView.findViewById(R.id.word_meaning);
-            word_pronoun = itemView.findViewById(R.id.word_pronoun);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

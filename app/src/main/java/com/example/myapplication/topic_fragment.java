@@ -1,10 +1,12 @@
 package com.example.myapplication;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -18,6 +20,8 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.provider.UserDictionary;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,7 +29,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.Toast;
 
+import com.example.myapplication.data.Topic;
 import com.example.myapplication.data.TopicWithWords;
 import com.example.myapplication.data.word;
 import com.example.myapplication.wordViewAdapter.wordViewAdapter;
@@ -43,11 +50,12 @@ public class topic_fragment extends Fragment implements recyclerViewClickInterfa
     NavController navController;
     RecyclerView recyclerView;
     private TopicViewModel topicViewModel;
+    private Topic mTopic;
+    private List<word> wordList;
     private int mTopicId;
     private String mTopicName;
     private static ArrayList<String> mWords = new ArrayList<>();
     private static ArrayList<String> mWordsMeaning = new ArrayList<>();
-    private static ArrayList<String> mWordsPronoun = new ArrayList<>();
     private static ArrayList<String> getmWordHint = new ArrayList<>();
 
     @Override
@@ -60,7 +68,7 @@ public class topic_fragment extends Fragment implements recyclerViewClickInterfa
         toolbar.setTitle(mTopicName);
         setHasOptionsMenu(true);
         recyclerView = view.findViewById(R.id.word_recycler_view);
-        wordViewAdapter adapter = new wordViewAdapter(mWords,mWordsMeaning,mWordsPronoun,this,getContext());
+        wordViewAdapter adapter = new wordViewAdapter(mWords,mWordsMeaning,this,getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
         topicViewModel = new ViewModelProvider(this).get(TopicViewModel.class);
@@ -103,6 +111,45 @@ public class topic_fragment extends Fragment implements recyclerViewClickInterfa
                 intent.putExtra("topicName",mTopicName);
                 startActivity(intent);
                 return true;
+            case R.id.delete_word_button:
+                Log.i("", "onOptionsItemSelected: delete topic click");
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Delete topic")
+                        .setMessage("Do you want to delete this topic")
+                        .setPositiveButton(R.string.no,null)
+                        .setNegativeButton(R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                topicViewModel.deleteTopic(mTopic);
+                                for(int i=0;i<wordList.size();i++){
+                                    topicViewModel.deleteWords(wordList.get(i));
+                                }
+                                Toast.makeText(getActivity(),"topic deleted",Toast.LENGTH_SHORT).show();
+                                Navigation.findNavController(getView()).navigate(R.id.action_topic_fragment2_to_main_fragment);
+                            }
+                        }).show();
+                return true;
+            case R.id.setting_button:
+                Log.i("", "onOptionsItemSelected: topic setting button click");
+                EditText editText = new EditText(getContext());
+                editText.setText(mTopicName);
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Change topic name")
+                        .setView(editText)
+                        .setPositiveButton(R.string.change, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String newName = editText.getText().toString();
+                                if(TextUtils.isEmpty(newName)){
+                                    Toast.makeText(getActivity(),"enter new topic name",Toast.LENGTH_SHORT).show();
+                                }
+                                else {
+                                    mTopic.setTopicName(newName);
+                                    topicViewModel.updateTopic(mTopic);
+                                }
+                                Toast.makeText(getActivity(),"topic name changed",Toast.LENGTH_SHORT).show();
+                            }
+                        }).show();
 
         }
         return super.onOptionsItemSelected(item);
@@ -130,38 +177,22 @@ public class topic_fragment extends Fragment implements recyclerViewClickInterfa
                 topicViewModel.getTopicById(mTopicId).observe(getViewLifecycleOwner(), new Observer<List<TopicWithWords>>() {
                     @Override
                     public void onChanged(List<TopicWithWords> topicWithWords) {
-                        mTopicName = topicWithWords.get(0).getTopic().getTopicName();
+                        mTopic = topicWithWords.get(0).getTopic();
+                        mTopicName = mTopic.getTopicName();
                         toolbar.setTitle(mTopicName);
                         mWords.clear();
                         mWordsMeaning.clear();
-                        mWordsPronoun.clear();
-                        List<word> wordList = topicWithWords.get(0).getWords();
+                        wordList = topicWithWords.get(0).getWords();
 
                         for(int i=0;i<wordList.size();i++){
                             mWords.add(wordList.get(i).getWord());
                             mWordsMeaning.add(wordList.get(i).getWord_mean());
-                            mWordsPronoun.add("pronoun");
                             getmWordHint.add(wordList.get(i).getWord_hint());
                         }
-                        adapter.setData(mWords,mWordsMeaning,mWordsPronoun);
+                        adapter.setData(mWords,mWordsMeaning);
                     }
                 });
             }
         });
-//        mWords.clear();
-//        mWordsMeaning.clear();
-//        mWordsPronoun.clear();
-//
-//        mWords.add("word 1");
-//        mWordsMeaning.add("meaning");
-//        mWordsPronoun.add("pronoun");
-//
-//        mWords.add("word 2");
-//        mWordsMeaning.add("meaning2");
-//        mWordsPronoun.add("pronoun2");
-//
-//        mWords.add("word 3");
-//        mWordsMeaning.add("meaning3");
-//        mWordsPronoun.add("pronoun3");
     }
 }

@@ -4,10 +4,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/setting_button"
-        android:title="setting" />
-
-    <item
         android:id="@+id/play_button"
         android:icon="@drawable/ic_play"
         app:showAsAction="always"
@@ -20,10 +16,14 @@
         android:title="" />
 
     <item
-        android:id="@+id/download_button"
-        android:icon="@drawable/ic_download_2"
+        android:id="@+id/delete_word_button"
+        android:icon="@drawable/ic_delete"
         app:showAsAction="always"
         android:title="" />
 
-
+    <item
+        android:id="@+id/setting_button"
+        android:icon="@drawable/ic_setting"
+        app:showAsAction="always"
+        android:title="" />
 </menu>

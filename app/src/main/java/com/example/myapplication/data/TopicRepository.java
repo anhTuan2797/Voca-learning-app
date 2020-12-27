@@ -83,8 +83,14 @@ public class TopicRepository {
         wordDao.update(word);
     }
 
-    public void delete(word word){
-        wordDao.delete(word);
+    public void deleteWords(word...words){
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                wordDao.delete(words);
+            }
+        });
     }
 
 }
