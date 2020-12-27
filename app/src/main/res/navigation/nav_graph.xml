@@ -23,18 +23,29 @@
         android:label="fragment_topic_fragment"
         tools:layout="@layout/fragment_topic_fragment" >
         <action
-            android:id="@+id/action_topic_fragment2_to_word_fragment"
-            app:destination="@id/word_fragment" />
-        <action
             android:id="@+id/action_topic_fragment2_to_main_fragment"
             app:destination="@id/main_fragment"
             />
+        <action
+            android:id="@+id/action_topic_fragment2_to_word_fragment"
+            app:destination="@id/word_fragment" />
+        <action
+            android:id="@+id/action_topic_fragment2_to_wordBottomSheet2"
+            app:destination="@id/wordBottomSheet" />
     </fragment>
 
     <fragment
         android:id="@+id/word_fragment"
         android:name="com.example.myapplication.word_fragment"
         android:label="word_fragment" />
+    <dialog
+        android:id="@+id/wordBottomSheet"
+        android:name="com.example.myapplication.WordBottomSheet"
+        android:label="WordBottomSheet" >
+        <action
+            android:id="@+id/action_wordBottomSheet_to_word_fragment"
+            app:destination="@id/word_fragment" />
+    </dialog>
 
 
 </navigation>

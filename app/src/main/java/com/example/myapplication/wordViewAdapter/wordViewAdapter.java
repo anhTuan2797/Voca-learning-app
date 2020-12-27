@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.myapplication.R;
-import com.example.myapplication.TopicRecylerView.TopicRecylerViewAdapter.topicRecyclerViewAdapter;
 import com.example.myapplication.recyclerViewClickInterface;
 
 import java.util.ArrayList;
@@ -68,6 +67,13 @@ public class wordViewAdapter extends RecyclerView.Adapter<wordViewAdapter.Viewho
                 @Override
                 public void onClick(View v) {
                     mRecyclerViewClickInterface.onItemClick(getAdapterPosition(),v);
+                }
+            });
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    mRecyclerViewClickInterface.onItemLongClick(getAdapterPosition(),v);
+                    return false;
                 }
             });
         }

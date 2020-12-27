@@ -34,10 +34,13 @@ import android.widget.Toast;
 
 import com.example.myapplication.data.Topic;
 import com.example.myapplication.data.TopicWithWords;
+import com.example.myapplication.data.sortByPriority;
 import com.example.myapplication.data.word;
 import com.example.myapplication.wordViewAdapter.wordViewAdapter;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -111,7 +114,7 @@ public class topic_fragment extends Fragment implements recyclerViewClickInterfa
                 intent.putExtra("topicName",mTopicName);
                 startActivity(intent);
                 return true;
-            case R.id.delete_word_button:
+            case R.id.delete_topic_button:
                 Log.i("", "onOptionsItemSelected: delete topic click");
                 new AlertDialog.Builder(getContext())
                         .setTitle("Delete topic")
@@ -158,16 +161,22 @@ public class topic_fragment extends Fragment implements recyclerViewClickInterfa
     @Override
     public void onItemClick(int position, View view) {
         Log.i(null, "word clicked");
+        WordBottomSheet bottomSheet = new WordBottomSheet(wordList.get(position),topicViewModel);
+        bottomSheet.show(getParentFragmentManager(),"test");
+    }
+
+    @Override
+    public void onItemLongClick(int position, View view) {
         Bundle wordResult = new Bundle();
         ArrayList<String> data = new ArrayList<>();
         data.add(mWords.get(position));
-        Log.i("", "onItemClick: mword " + mWords.get(position));
         data.add(getmWordHint.get(position));
         data.add(mWordsMeaning.get(position));
         wordResult.putStringArrayList("wordData",data);
         getParentFragmentManager().setFragmentResult("wordData",wordResult);
         Navigation.findNavController(view).navigate(R.id.action_topic_fragment2_to_word_fragment);
     }
+
     private void initWord(wordViewAdapter adapter){
         getParentFragmentManager().setFragmentResultListener("topicId", this, new FragmentResultListener() {
             @Override
@@ -183,7 +192,7 @@ public class topic_fragment extends Fragment implements recyclerViewClickInterfa
                         mWords.clear();
                         mWordsMeaning.clear();
                         wordList = topicWithWords.get(0).getWords();
-
+                        Collections.sort(wordList,new sortByPriority());
                         for(int i=0;i<wordList.size();i++){
                             mWords.add(wordList.get(i).getWord());
                             mWordsMeaning.add(wordList.get(i).getWord_mean());

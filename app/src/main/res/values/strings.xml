@@ -23,4 +23,9 @@
     <string name="yes">YES</string>
     <string name="no">NO</string>
     <string name="change">CHANGE</string>
+    <string name="play">Play</string>
+    <string name="learned">Learned</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="clear">Clear</string>
 </resources>

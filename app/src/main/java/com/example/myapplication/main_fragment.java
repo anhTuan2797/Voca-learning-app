@@ -79,7 +79,12 @@ public class main_fragment extends Fragment implements View.OnClickListener, rec
         Navigation.findNavController(view).navigate(R.id.action_main_fragment_to_topic_fragment2);
     }
 
-//    For floating button
+    @Override
+    public void onItemLongClick(int position, View view) {
+
+    }
+
+    //    For floating button
     @Override
     public void onClick(View v) {
         if(v.getId()==R.id.add_card_button){

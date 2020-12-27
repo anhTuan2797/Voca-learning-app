@@ -16,7 +16,7 @@
         android:title="" />
 
     <item
-        android:id="@+id/delete_word_button"
+        android:id="@+id/delete_topic_button"
         android:icon="@drawable/ic_delete"
         app:showAsAction="always"
         android:title="" />

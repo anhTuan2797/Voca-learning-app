@@ -4,6 +4,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.Comparator;
+
 @Entity(tableName = "word_table")
 public class word {
     @PrimaryKey(autoGenerate = true)
@@ -63,4 +65,21 @@ public class word {
     public void setWordId(int wordId) {
         this.wordId = wordId;
     }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
+    public void setWord(String word) {
+        this.word = word;
+    }
+
+    public void setWord_hint(String word_hint) {
+        this.word_hint = word_hint;
+    }
+
+    public void setWord_mean(String word_mean) {
+        this.word_mean = word_mean;
+    }
 }
+

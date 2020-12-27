@@ -17,7 +17,7 @@ public interface TopicDao {
     LiveData<List<TopicWithWords>> getAll();
 
     @Transaction
-    @Query("SELECT * FROM topic_table WHERE topicId in (:topicIds)")
+    @Query("SELECT * FROM topic_table WHERE topicId in (:topicIds) ")
     LiveData<List<TopicWithWords>> getTopicById(int topicIds);
 
     @Query("DELETE FROM topic_table")

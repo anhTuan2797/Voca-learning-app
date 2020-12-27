@@ -79,8 +79,14 @@ public class TopicRepository {
         });
     }
 
-    public void update(word word){
-        wordDao.update(word);
+    public void updateWord(word word){
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                wordDao.update(word);
+            }
+        });
     }
 
     public void deleteWords(word...words){
