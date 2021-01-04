@@ -36,13 +36,7 @@ public abstract class TopicDatabase extends RoomDatabase {
             executor.execute(new Runnable() {
                 @Override
                 public void run() {
-                    mTopicDatabase.topicDao().insertAll(new Topic("topic 3",
-                            "https://images.pexels.com/photos/5650027/pexels-photo-5650027.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-                            "normal"));
 
-                    mTopicDatabase.topicDao().insertAll(new Topic("topic 2",
-                            "https://images.pexels.com/photos/5650027/pexels-photo-5650027.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-                            "normal"));
                 }
             });
         }

@@ -41,6 +41,7 @@ public class main_fragment extends Fragment implements View.OnClickListener, rec
     private ArrayList<String> mTopicName = new ArrayList<>();
     private ArrayList<String> mTopicThumb = new ArrayList<>();
     private ArrayList<Boolean> mTopicDownloadStatus = new ArrayList<>();
+    private topicRecyclerViewAdapter adapter;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -61,7 +62,7 @@ public class main_fragment extends Fragment implements View.OnClickListener, rec
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main_fragment, container, false);
         recyclerView = view.findViewById(R.id.topic_list_recycler_view);
-        topicRecyclerViewAdapter adapter = new topicRecyclerViewAdapter(mTopicName,mTopicThumb,mTopicDownloadStatus,this,getContext());
+        adapter = new topicRecyclerViewAdapter(mTopicName,mTopicThumb,mTopicDownloadStatus,this,getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
         topicViewModel = new ViewModelProvider(this).get(TopicViewModel.class);
@@ -72,7 +73,8 @@ public class main_fragment extends Fragment implements View.OnClickListener, rec
 //    for list item
     @Override
     public void onItemClick(int position,View view) {
-        Log.i(null, mTopicName.get(position));
+        Log.d(null, String.valueOf(position));
+        Log.i(null, "topic id click" + String.valueOf(mTopicId.get(position)));
         Bundle result = new Bundle();
         result.putInt("topicId",mTopicId.get(position));
         getParentFragmentManager().setFragmentResult("topicId",result);
@@ -99,6 +101,7 @@ public class main_fragment extends Fragment implements View.OnClickListener, rec
         topicViewModel.getAllTopic().observe(getViewLifecycleOwner(), new Observer<List<TopicWithWords>>() {
             @Override
             public void onChanged(List<TopicWithWords> topicWithWords) {
+                mTopicId.clear();
                 mTopicName.clear();
                 mTopicThumb.clear();
                 mTopicDownloadStatus.clear();

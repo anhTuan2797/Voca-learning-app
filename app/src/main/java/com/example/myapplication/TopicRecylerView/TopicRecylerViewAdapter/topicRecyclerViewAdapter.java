@@ -62,13 +62,6 @@ public class topicRecyclerViewAdapter extends RecyclerView.Adapter<topicRecycler
             holder.topic_download_status.setVisibility(View.INVISIBLE);
             Log.i(null,"false");
         }
-//        holder.topic_card_view.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Log.i(null,"clicked");
-//                Log.i(null,mTopicNames.get(position));
-//            }
-//        });
     }
 
     @Override

@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentResultListener;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -55,16 +56,18 @@ public class topic_fragment extends Fragment implements recyclerViewClickInterfa
     private TopicViewModel topicViewModel;
     private Topic mTopic;
     private List<word> wordList;
-    private int mTopicId;
+    private  volatile int mTopicId;
     private String mTopicName;
     private static ArrayList<String> mWords = new ArrayList<>();
     private static ArrayList<String> mWordsMeaning = new ArrayList<>();
-    private static ArrayList<String> getmWordHint = new ArrayList<>();
+    private static ArrayList<String> mWordHint = new ArrayList<>();
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        Log.d(null, "onCreateView: topic view created");
         View view = inflater.inflate(R.layout.fragment_topic_fragment, container, false);
         toolbar = view.findViewById(R.id.word_toolBar);
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
@@ -75,7 +78,18 @@ public class topic_fragment extends Fragment implements recyclerViewClickInterfa
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
         topicViewModel = new ViewModelProvider(this).get(TopicViewModel.class);
-        initWord(adapter);
+        getParentFragmentManager().setFragmentResultListener("topicId", this, new FragmentResultListener() {
+            @Override
+            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
+                mTopicId = result.getInt("topicId");
+                Log.i(null, "onFragmentResult: "+mTopicId);
+                initWord(adapter);
+            }
+        });
+        if(mTopicId != 0){
+            initWord(adapter);
+        }
+        Log.i(null, "onCreateView: " + mTopicId);
         return view;
     }
 
@@ -100,7 +114,7 @@ public class topic_fragment extends Fragment implements recyclerViewClickInterfa
                 ArrayList<String> data = new ArrayList<>();
                 for(int i=0;i<mWords.size();i++){
                     data.add(mWords.get(i));
-                    data.add(getmWordHint.get(i));
+                    data.add(mWordHint.get(i));
                     data.add(mWordsMeaning.get(i));
                 }
                 result.putStringArrayList("wordData",data);
@@ -170,7 +184,7 @@ public class topic_fragment extends Fragment implements recyclerViewClickInterfa
         Bundle wordResult = new Bundle();
         ArrayList<String> data = new ArrayList<>();
         data.add(mWords.get(position));
-        data.add(getmWordHint.get(position));
+        data.add(mWordHint.get(position));
         data.add(mWordsMeaning.get(position));
         wordResult.putStringArrayList("wordData",data);
         getParentFragmentManager().setFragmentResult("wordData",wordResult);
@@ -178,29 +192,24 @@ public class topic_fragment extends Fragment implements recyclerViewClickInterfa
     }
 
     private void initWord(wordViewAdapter adapter){
-        getParentFragmentManager().setFragmentResultListener("topicId", this, new FragmentResultListener() {
+        topicViewModel.getTopicById(mTopicId).observe(getViewLifecycleOwner(), new Observer<List<TopicWithWords>>() {
             @Override
-            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                mTopicId = result.getInt("topicId");
-                Log.i("", "onFragmentResult: topic id" + Integer.toString(mTopicId));
-                topicViewModel.getTopicById(mTopicId).observe(getViewLifecycleOwner(), new Observer<List<TopicWithWords>>() {
-                    @Override
-                    public void onChanged(List<TopicWithWords> topicWithWords) {
-                        mTopic = topicWithWords.get(0).getTopic();
-                        mTopicName = mTopic.getTopicName();
-                        toolbar.setTitle(mTopicName);
-                        mWords.clear();
-                        mWordsMeaning.clear();
-                        wordList = topicWithWords.get(0).getWords();
-                        Collections.sort(wordList,new sortByPriority());
-                        for(int i=0;i<wordList.size();i++){
-                            mWords.add(wordList.get(i).getWord());
-                            mWordsMeaning.add(wordList.get(i).getWord_mean());
-                            getmWordHint.add(wordList.get(i).getWord_hint());
-                        }
-                        adapter.setData(mWords,mWordsMeaning);
-                    }
-                });
+            public void onChanged(List<TopicWithWords> topicWithWords) {
+                Log.i(null, "onChanged: run");
+                mTopic = topicWithWords.get(0).getTopic();
+                mTopicName = mTopic.getTopicName();
+                toolbar.setTitle(mTopicName);
+                mWords.clear();
+                mWordHint.clear();
+                mWordsMeaning.clear();
+                wordList = topicWithWords.get(0).getWords();
+                Collections.sort(wordList,new sortByPriority());
+                for(int i=0;i<wordList.size();i++){
+                    mWords.add(wordList.get(i).getWord());
+                    mWordsMeaning.add(wordList.get(i).getWord_mean());
+                    mWordHint.add(wordList.get(i).getWord_hint());
+                }
+                adapter.setData(mWords,mWordsMeaning);
             }
         });
     }
